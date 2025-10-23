@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health News | Learning with Experts</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2a7de1;
+            --primary-dark: #1a5db5;
+            --secondary: #4caf50;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            color: var(--primary-dark);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+        
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: var(--light-gray);
+            border-radius: 30px;
+            padding: 8px 15px;
+        }
+        
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 200px;
+        }
+        
+        .search-bar i {
+            color: var(--gray);
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .content {
+            flex: 2;
+        }
+        
+        .sidebar {
+            flex: 1;
+        }
+        
+        /* Article Styles */
+        .article-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .article-image {
+            height: 350px;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            color: white;
+        }
+        
+        .article-content {
+            padding: 25px;
+        }
+        
+        .article-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .article-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .article-excerpt {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .article-body {
+            margin-bottom: 25px;
+        }
+        
+        .article-body p {
+            margin-bottom: 15px;
+        }
+        
+        .article-body h3 {
+            margin: 20px 0 10px;
+            color: var(--dark);
+        }
+        
+        .article-body ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .read-more:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+        
+        /* Sidebar Styles */
+        .sidebar-widget {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .widget-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+            color: var(--dark);
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .categories-list a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--dark);
+        }
+        
+        .categories-list a:hover {
+            color: var(--primary);
+        }
+        
+        .categories-list span {
+            background: var(--light-gray);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .popular-posts {
+            list-style: none;
+        }
+        
+        .popular-post {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .popular-post-img {
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius);
+            background-color: var(--light-gray);
+            flex-shrink: 0;
+        }
+        
+        .popular-post-content h4 {
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .popular-post-content span {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .newsletter-form input {
+            padding: 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            outline: none;
+        }
+        
+        .newsletter-form button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .newsletter-form button:hover {
+            background: #3d8b40;
+        }
+        
+        /* Related Articles */
+        .section-title {
+            font-size: 22px;
+            margin: 40px 0 20px;
+            color: var(--dark);
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .article-preview {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .article-preview:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-preview-img {
+            height: 180px;
+            background-color: var(--light-gray);
+        }
+        
+        .article-preview-content {
+            padding: 20px;
+        }
+        
+        .article-preview-content h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .article-preview-content p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .article-image {
+                height: 250px;
+            }
+            
+            .article-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <h1>Health<span>News</span></h1>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Nutrition</a></li>
+                    <li><a href="#">Fitness</a></li>
+                    <li><a href="#">Mental Health</a></li>
+                    <li><a href="#">Prevention</a></li>
+                    <li><a href="#">Research</a></li>
+                </ul>
+            </nav>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search articles...">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Featured Article -->
+                <article class="article-card">
+                    <div class="article-image">
+                        <div>
+                            <span class="category-tag">Mental Health</span>
+                            <h2 class="article-title">The Science of Sleep: How Quality Rest Impacts Your Health</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span><i class="far fa-user"></i> Dr. Sarah Johnson</span>
+                            <span><i class="far fa-calendar"></i> June 15, 2023</span>
+                            <span><i class="far fa-clock"></i> 8 min read</span>
+                        </div>
+                        
+                        <div class="article-body">
+                            <p>Sleep is not merely a "break" from our busy lives; it's an essential function that allows our bodies and minds to recharge, leaving us refreshed and alert when we wake up. Healthy sleep also helps the body remain healthy and stave off diseases. Without enough sleep, the brain cannot function properly.</p>
+                            
+                            <h3>The Sleep-Health Connection</h3>
+                            <p>Research has shown that inadequate sleep—either in quantity or quality—increases the risk of various health issues, including:</p>
+                            <ul>
+                                <li>Weakened immune system</li>
+                                <li>Weight gain and obesity</li>
+                                <li>Cardiovascular diseases</li>
+                                <li>Diabetes and insulin resistance</li>
+                                <li>Mental health disorders</li>
+                            </ul>
+                            
+                            <h3>Stages of Sleep</h3>
+                            <p>Sleep occurs in multiple stages that cycle throughout the night:</p>
+                            <ul>
+                                <li><strong>NREM Stage 1:</strong> The transition from wakefulness to sleep</li>
+                                <li><strong>NREM Stage 2:</strong> Light sleep where body temperature drops and heart rate slows</li>
+                                <li><strong>NREM Stage 3:</strong> Deep sleep crucial for physical restoration</li>
+                                <li><strong>REM Sleep:</strong> Where most dreaming occurs, important for memory and learning</li>
+                            </ul>
+                            
+                            <h3>Tips for Better Sleep</h3>
+                            <p>Improving sleep quality often requires establishing healthy habits:</p>
+                            <ul>
+                                <li>Maintain a consistent sleep schedule, even on weekends</li>
+                                <li>Create a relaxing bedtime routine</li>
+                                <li>Make your bedroom comfortable and free from distractions</li>
+                                <li>Avoid caffeine, nicotine, and heavy meals close to bedtime</li>
+                                <li>Get regular exercise, but not too close to bedtime</li>
+                            </ul>
+                            
+                            <p>If you continue to have trouble sleeping, consult with a healthcare provider to rule out sleep disorders like insomnia or sleep apnea.</p>
+                        </div>
+                        
+                        <a href="#" class="read-more">Read Full Article</a>
+                    </div>
+                </article>
+                
+                <!-- Related Articles -->
+                <h2 class="section-title">Related Articles</h2>
+                <div class="articles-grid">
+                    <div class="article-preview">
+                        <div class="article-preview-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+                        <div class="article-preview-content">
+                            <h3>10 Superfoods to Boost Your Immune System</h3>
+                            <p>Discover the most powerful foods that can help strengthen your body's natural defenses.</p>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-preview">
+                        <div class="article-preview-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+                        <div class="article-preview-content">
+                            <h3>The Benefits of Meditation for Stress Reduction</h3>
+                            <p>Learn how regular meditation practice can significantly lower stress levels and improve mental clarity.</p>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="article-preview">
+                        <div class="article-preview-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80'); background-size: cover; background-position: center;"></div>
+                        <div class="article-preview-content">
+                            <h3>Understanding Heart Health: Prevention Tips</h3>
+                            <p>Essential information about maintaining cardiovascular health and reducing heart disease risk.</p>
+                            <a href="#" class="read-more">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Categories Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="categories-list">
+                        <li><a href="#">Nutrition <span>24</span></a></li>
+                        <li><a href="#">Fitness <span>18</span></a></li>
+                        <li><a href="#">Mental Health <span>15</span></a></li>
+                        <li><a href="#">Prevention <span>22</span></a></li>
+                        <li><a href="#">Research <span>12</span></a></li>
+                        <li><a href="#">Wellness <span>19</span></a></li>
+                    </ul>
+                </div>
+                
+                <!-- Popular Posts Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Popular Posts</h3>
+                    <ul class="popular-posts">
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center;"></div>
+                            <div class="popular-post-content">
+                                <h4>10 Signs You're Not Getting Enough Sleep</h4>
+                                <span>May 28, 2023</span>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center;"></div>
+                            <div class="popular-post-content">
+                                <h4>The Mediterranean Diet: A Complete Guide</h4>
+                                <span>June 5, 2023</span>
+                            </div>
+                        </li>
+                        <li class="popular-post">
+                            <div class="popular-post-img" style="background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80'); background-size: cover; background-position: center;"></div>
+                            <div class="popular-post-content">
+                                <h4>Yoga for Beginners: Poses to Get Started</h4>
+                                <span>June 12, 2023</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Widget -->
+                <div class="sidebar-widget">
+                    <h3 class="widget-title">Health Newsletter</h3>
+                    <p>Stay updated with the latest health news and expert advice.</p>
+                    <form class="newsletter-form">
+                        <input type="text" placeholder="Your Name">
+                        <input type="email" placeholder="Your Email">
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>About HealthNews</h3>
+                    <p>HealthNews provides evidence-based health information, expert insights, and the latest medical research to help you make informed decisions about your wellbeing.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Medical Experts</a></li>
+                        <li><a href="#">Health Topics</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Health Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Nutrition & Diet</a></li>
+                        <li><a href="#">Fitness & Exercise</a></li>
+                        <li><a href="#">Mental Health</a></li>
+                        <li><a href="#">Preventive Care</a></li>
+                        <li><a href="#">Chronic Conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Health Street, Medical City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@healthnews.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 HealthNews. All rights reserved. | Designed for educational purposes</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
